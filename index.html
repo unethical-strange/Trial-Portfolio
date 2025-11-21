@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Alex Chen</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: capitalize;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #a78bfa;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #a78bfa, #ec4899);
+            padding: 4px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #a78bfa, #ec4899, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 3s ease infinite;
+            background-size: 200% auto;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .scroll-indicator {
+            margin-top: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(to right, #a78bfa, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(167, 139, 250, 0.5);
+            transform: scale(1.02);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .about-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #a78bfa;
+        }
+
+        .about-section p {
+            line-height: 1.8;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .interest-card {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(236, 72, 153, 0.2));
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: rgba(167, 139, 250, 0.5);
+            transform: scale(1.05);
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .skill-percent {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(107, 114, 128, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #a78bfa, #ec4899);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: rgba(167, 139, 250, 0.5);
+            transform: scale(1.05);
+        }
+
+        .project-header {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .project-card:hover .project-header::before {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .gradient-1 { background: linear-gradient(135deg, #a78bfa, #ec4899); }
+        .gradient-2 { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+        .gradient-3 { background: linear-gradient(135deg, #f97316, #ef4444); }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            color: #9ca3af;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(167, 139, 250, 0.2);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #c4b5fd;
+        }
+
+        .project-link {
+            color: #a78bfa;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .project-link:hover {
+            color: #c4b5fd;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(236, 72, 153, 0.2));
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+        }
+
+        .contact-card:hover {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.3), rgba(236, 72, 153, 0.3));
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1);
+        }
+
+        .contact-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav" id="navbar">
+        <div class="logo">&lt;Portfolio /&gt;</div>
+        <ul class="nav-links">
+            <li><a href="#home" class="active">home</a></li>
+            <li><a href="#about">about</a></li>
+            <li><a href="#skills">skills</a></li>
+            <li><a href="#projects">projects</a></li>
+            <li><a href="#contact">contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <div class="container hero">
+            <div class="profile-pic">
+                <div class="profile-inner">
+                    <i data-lucide="user" style="width: 64px; height: 64px; color: #a78bfa;"></i>
+                </div>
+            </div>
+            <h1>Hi, I'm Alex Chen</h1>
+            <p class="subtitle">Full Stack Developer & Tech Enthusiast</p>
+            <p class="description">
+                Building innovative solutions with modern technologies. Passionate about creating seamless user experiences and clean code.
+            </p>
+            <div class="social-links">
+                <a href="https://github.com"><i data-lucide="github"></i></a>
+                <a href="https://linkedin.com"><i data-lucide="linkedin"></i></a>
+                <a href="mailto:alex@example.com"><i data-lucide="mail"></i></a>
+            </div>
+            <div class="scroll-indicator">
+                <i data-lucide="chevron-down" style="width: 32px; height: 32px; color: #a78bfa;"></i>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="glass-card">
+                <div class="about-grid">
+                    <div class="about-section">
+                        <h3>Background</h3>
+                        <p>
+                            I'm a final-year Computer Science student with a passion for creating impactful digital experiences. My journey in tech started with a curiosity about how things work, and has evolved into a deep love for solving complex problems through code.
+                        </p>
+                        <p>
+                            I specialize in full-stack development, with expertise in modern JavaScript frameworks and cloud technologies. I'm always eager to learn new technologies and contribute to meaningful projects.
+                        </p>
+                    </div>
+                    <div class="about-section">
+                        <h3 style="color: #ec4899;">Interests</h3>
+                        <div class="interests-grid">
+                            <div class="interest-card">
+                                <i data-lucide="globe" style="margin-bottom: 0.5rem; color: #a78bfa;"></i>
+                                <p style="font-weight: 600;">Web Development</p>
+                            </div>
+                            <div class="interest-card">
+                                <i data-lucide="cpu" style="margin-bottom: 0.5rem; color: #a78bfa;"></i>
+                                <p style="font-weight: 600;">AI/ML</p>
+                            </div>
+                            <div class="interest-card">
+                                <i data-lucide="cloud" style="margin-bottom: 0.5rem; color: #a78bfa;"></i>
+                                <p style="font-weight: 600;">Cloud Computing</p>
+                            </div>
+                            <div class="interest-card">
+                                <i data-lucide="code" style="margin-bottom: 0.5rem; color: #a78bfa;"></i>
+                                <p style="font-weight: 600;">Open Source</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <i data-lucide="code" style="color: #a78bfa;"></i>
+                            JavaScript
+                        </div>
+                        <span class="skill-percent">85%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <i data-lucide="terminal" style="color: #a78bfa;"></i>
+                            React
+                        </div>
+                        <span class="skill-percent">80%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <i data-lucide="cpu" style="color: #a78bfa;"></i>
+                            Node.js
+                        </div>
+                        <span class="skill-percent">75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <i data-lucide="code" style="color: #a78bfa;"></i>
+                            Python
+                        </div>
+                        <span class="skill-percent">70%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <i data-lucide="database" style="color: #a78bfa;"></i>
+                            SQL
+                        </div>
+                        <span class="skill-percent">75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <i data-lucide="github" style="color: #a78bfa;"></i>
+                            Git
+                        </div>
+                        <span class="skill-percent">80%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header gradient-1">
+                        <i data-lucide="briefcase" style="width: 64px; height: 64px; color: white; opacity: 0.5; z-index: 1;"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3 class="project-title">E-Commerce Platform</h3>
+                        <p class="project-desc">Full-stack e-commerce solution with payment integration, cart management, and admin dashboard.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Stripe</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            View Project <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header gradient-2">
+                        <i data-lucide="briefcase" style="width: 64px; height: 64px; color: white; opacity: 0.5; z-index: 1;"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3 class="project-title">Task Management App</h3>
+                        <p class="project-desc">Collaborative task manager with real-time updates, drag-and-drop interface, and team features.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Tailwind CSS</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            View Project <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header gradient-3">
+                        <i data-lucide="briefcase" style="width: 64px; height: 64px; color: white; opacity: 0.5; z-index: 1;"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3 class="project-title">Portfolio Generator</h3>
+                        <p class="project-desc">AI-powered tool that generates personalized portfolio websites based on user data.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">OpenAI API</span>
+                            <span class="tech-tag">TypeScript</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            View Project <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <p class="description" style="text-align: center;">
+                I'm always open to new opportunities and collaborations. Feel free to reach out!
+            </p>
+            <div class="glass-card">
+                <div class="contact-grid">
+                    <a href="mailto:alex@example.com" class="contact-card">
+                        <div class="contact-icon">
+                            <i data-lucide="mail" style="width: 48px; height: 48px; color: #a78bfa;"></i>
+                        </div>
+                        <h3 class="contact-title">Email</h3>
+                        <p class="contact-info">alex@example.com</p>
+                    </a>
+                    <a href="https://linkedin.com" class="contact-card">
+                        <div class="contact-icon">
+                            <i data-lucide="linkedin" style="width: 48px; height: 48px; color: #a78bfa;"></i>
+                        </div>
+                        <h3 class="contact-title">LinkedIn</h3>
+                        <p class="contact-info">Connect with me</p>
+                    </a>
+                    <a href="https://github.com" class="contact-card">
+                        <div class="contact-icon">
+                            <i data-lucide="github" style="width: 48px; height: 48px; color: #a78bfa;"></i>
+                        </div>
+                        <h3 class="contact-title">GitHub</h3>
+                        <p class="contact-info">Check my code</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 Alex Chen. Built with HTML, CSS & JavaScript</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+
+                // Update active link
+                document.querySelectorAll('.nav-links a').forEach(function(l) {
+                    l.classList.remove('active');
+                });
+                link.classList.add('active');
+            });
+        });
+
+        // Animate skill bars on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.progress-fill');
+                    progressBars.forEach(function(bar) {
+                        bar.style.width = bar.style.width;
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+    </script>
+</body>
+</html>
